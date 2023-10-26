@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { type CollectionEntry, getCollection } from 'astro:content';
+
+import FormattedDate from '../../components/FormattedDate.astro';
+import Container from '../../components/Container.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('project');
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<'project'>;
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={`${post.data.title} | t2del` } meta_description={`${post.data.description}` } body_class="project inner index something you wish to add for any use">
+	<article>
+		<div class="hero-image notshow blur">
+			{post.data.heroImage && <img width={1920} height={750} src={post.data.heroImage} alt={post.data.imgalt} />}
+		</div>
+		<Container className="custom-class">
+			<div class="prose">
+				<div class="title">
+					<div class="date"><FormattedDate date={post.data.pubDate} /></div>
+					<h1>{post.data.title}</h1>
+					<hr />
+				</div>
+				<div class="description">
+					<div>Role: <span>{post.data.role}</span></div>
+					<div>Platform: <span>{post.data.platform}</span></div>
+					<a href={post.data.siteUrl} rel="noopener noreferrer"><span>Visit Site</span></a>
+				</div>
+				<Content />
+			</div>
+		</Container>
+	</article>
+</Layout>

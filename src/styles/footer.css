@@ -1,0 +1,18 @@
+footer {
+	  background-color: #fafafa;
+    border-top: 1px solid #f3f3f3;
+    border-bottom: 1px solid #f3f3f3;
+    padding: 20px 0;
+}
+footer .content__container.container-footer{
+  padding: 10px 10px;
+}
+footer .content__container {
+	  display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+footer .content__container.container-footer{
+  padding: 10px 10px;
+}

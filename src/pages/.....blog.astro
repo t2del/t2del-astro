@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/Container.astro';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { Debug } from 'astro:components';
+
+import Pagination from "../../components/Pagination.astro";
+import PostCard from "../../components/PostCard.astro";
+// utils imports
+import { formatBlogPosts } from "../../config/utils";
+
+// const posts_blog = (await getCollection('blog'))
+//   .filter(post => post.data.status == 'active') // Filter out active posts
+//   .sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()).reverse();
+
+export async function getStaticPaths({ paginate }) {
+  const allPosts = await Astro.glob("../../content/blog/*.md");
+  const formattedPosts = formatBlogPosts(allPosts);
+
+  return paginate(formattedPosts, {
+    pageSize: 3,
+  });
+}
+
+const { page } = Astro.props;
+---
+
+<!-- <Debug {page}/> -->
+<Layout title="Blog | t2del" meta_description="Blog | My Blog" body_class="blog">
+	<section>
+		<Container className="custom-class">
+			<h2 class="notshow fromleft"> <span class="text-gradient">Blog</span></h2>
+			<!-- <ul role="list" class="link-card-grid">
+				{
+					posts_blog.map((post) => (
+						<li class="notshow fromtop">
+							<a href={`/blog/${post.slug}/`}>
+								<img  src={post.data.heroImage} alt={post.data.imgalt} title={post.data.imgalt} />
+								<h4 class="title">{post.data.title}</h4>
+								<p class="date">
+									<FormattedDate date={post.data.pubDate} />
+								</p>
+							</a>							
+						</li>						
+					))
+				}
+			</ul> -->
+			<ul>
+				{
+					page.data.map((post) => (
+					  <li>{post.url}</li>
+					))
+				  }
+			</ul>
+			<Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+		</Container>			
+	</section>
+</Layout>

@@ -1,0 +1,35 @@
+---
+import '../styles/index.css';
+
+import BaseHead from './BaseHead.astro';
+import { nav } from '../config/nav.js';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import Logo from '../components/Logo.astro';
+
+interface Props {
+	title: string;
+	meta_description: string;
+	body_class: string;
+}
+const { title, meta_description, body_class } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={meta_description} image="/t2delastro-thumbnail.png" />				
+	</head>
+
+	<body class={body_class}>
+		<Header rightMenu navData={nav} id="navID" slot="header">
+			<span slot="logo">
+				<Logo />
+			</span>
+		</Header>
+		<slot />
+		<Footer>
+	</body>
+</html>
+
+

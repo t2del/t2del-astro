@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Modal from '../components/ModalTest.astro';
+import HomeHeroSection from '../components/sections/heros/HomeHeroSection.astro';
+---
+
+<Layout title="t2del" meta_description="t2del" body_class="test">
+	<HomeHeroSection />
+	<section id="test">	
+		<Modal id="dialog" open="Open modal">
+			<main slot="main">
+				<p>Some extra content you would like here</p>
+				<hr />
+			</main>
+			<button slot="close">Close modal</button>
+		</Modal>
+	</section>
+</Layout>

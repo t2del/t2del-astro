@@ -1,0 +1,93 @@
+---
+import { Icon } from 'astro-icon'
+const { navData, rightMenu } = Astro.props;
+import Container from '../components/Container.astro';
+---
+<script type="module" >
+  document.addEventListener('astro:page-load', () => {
+    // put all javascript here
+    const bodyElement = document.querySelector('body');
+    const menuButton = document.querySelector('#menuButton')
+    const navHeader = document.querySelector('#t2delHeader');
+    const menuButtonIconHam = document.querySelector('#menuButtonIconHam');
+    const menuButtonIconClose = document.querySelector('#menuButtonIconClose');
+
+    menuButton.addEventListener('click', toggleMenu);
+    function toggleMenu() {
+      menuButtonIconHam.toggleAttribute('hidden');
+      menuButtonIconClose.toggleAttribute('hidden');
+      navHeader.toggleAttribute('mobile-menu-open');
+    }
+    const scrollingElement = document.querySelector('header');
+
+    window.addEventListener('scroll', () => {
+      const scrollPercentage = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      if (scrollPercentage > 1) {
+        scrollingElement.classList.add("white-bg"); // White background
+      } else {
+        scrollingElement.classList.remove("white-bg");; // Default background
+      }
+    });
+    const obeserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('show');
+        } else {
+          entry.target.classList.remove('show');
+        }
+      });
+    });
+    const hiddenElements = document.querySelectorAll('.notshow');
+    hiddenElements.forEach((el) => obeserver.observe(el));
+  }, );  
+</script>  
+
+<header id="t2delHeader" class={`${rightMenu ? "header--right" : ``.trim()}`}>
+  <Container className="container-header">
+  <div class="header-logo-menu__container">
+  <button id="menuButton" title="Open Main Menu">
+    <span id="menuButtonIconHam">
+        <div class="baseline-menu"></div>
+      <Icon name="ic:baseline-menu" width="24px" height="24px" />
+    </span>
+    <span id="menuButtonIconClose" hidden>
+      <Icon name="ic:baseline-close" width="24px" height="24px" />
+      <div class="baseline-close"></div>
+    </span>
+  </button>
+  <a class="header-logo__link" href="/">
+    <slot name="logo">
+    </slot>
+  </a>
+  </div>
+  <div class="header-nav__container">
+    <slot name="nav">
+      {navData && (
+        <nav>
+          <ul>
+            {navData.map(navItem => (
+              <li className={navItem.submenu ? 'has-submenu' : ''}>
+                <a href={navItem.slug}>{navItem.title}</a>
+                {navItem.submenu && (
+                  <ul class="sub-menu ">
+                    {navItem.submenu.map(submenuItem => (
+                      <li>
+                        <a href={submenuItem.slug}>{submenuItem.title}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+      
+    </slot>
+  </div>
+  <div class="header-action-item__container hide">
+    <slot name="action-item">
+    </slot>
+  </div>
+</Container>
+</header>

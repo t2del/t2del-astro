@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
+import { getCollection } from 'astro:content';
+import CustomModal from '../components/Modal.astro';
+import { Debug } from 'astro:components';
+
+	const posts_project = (await getCollection('project'))
+	//.filter(post => post.data.status == 'active') // Filter out active posts
+	.sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()).reverse();
+
+	const posts_project_featured = (await getCollection('project'))
+	.filter(post => post.data.status == 'featured') // Filter out active posts
+	.sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
+---
+
+<Layout title="Portfolio | t2del" meta_description="Portfolio | t2del" body_class="portfolio">
+		<section>			
+			<Container className="custom-class">
+				<h2 class="notshow fromleft"> <span class="text-gradient">Portfolio</span></h2>
+				<ul role="list" class="link-card-grid featured">
+					{
+						posts_project_featured.map((post) => (
+							<li class="notshow blur portfolio-list"  id={post.slug}>
+								<CustomModal title={post.data.title} slug={post.slug} classText="animate_underline" imgsrc={post.data.heroImage}  />
+							</li>
+						))
+					}
+				</ul>
+
+				<ul role="list" class="link-card-grid">
+					{
+						posts_project.map((post) => {
+						  if (post.data.status == 'active') {
+							return (
+								<li class="notshow blur portfolio-list"  id={post.slug}>
+									<CustomModal title={post.data.title} slug={post.slug} classText="animate_underline" imgsrc={post.data.heroImage}  />
+								</li>
+							);
+						  }
+						  return null;
+						})
+					  }
+				</ul>	
+			</Container>	
+		</section>	
+</Layout>

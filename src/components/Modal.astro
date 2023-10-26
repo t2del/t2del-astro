@@ -1,0 +1,47 @@
+---
+const { title = 'Welcome, world!', slug, classContainer = '', classText = '', imgsrc = '' } = Astro.props;
+
+---
+
+<!-- Store the message prop as a data attribute. -->
+<astro-greet data-message={title} data-slug={slug}>
+  <button class={`btn-modal ${classContainer}`} id={`btn-modal-${slug}`}>
+
+    <img  src={imgsrc} alt={title}  title={title} class="" />
+    <h4 class={`title ${classText}`}>{title}</h4>  
+  </button>
+</astro-greet>
+
+
+
+<script>
+  class AstroGreet extends HTMLElement {
+    constructor() {
+      super();
+
+      // Read the message from the data attribute.
+      const title = this.dataset.title;
+      const slug = this.dataset.slug;
+        const button = this.querySelector('button');
+
+        // Get the modal
+        var modal = document.getElementById(slug);
+        var libutton = document.getElementById('btn-modal-'+slug);
+        
+        button.addEventListener('click', () => {
+            modal.classList.add("modal-show");
+            // modal.classList.add("modalshow");
+            // libutton.classList.add("hidethis");
+        });
+        // Add a click event listener to the window when the modal is active, add close modal action
+        window.addEventListener('click', function(event) {
+            if (event.target.id) {  
+                event.target.classList.remove('modal-show');
+                // event.target.classList.remove('modalshow');
+                // libutton.classList.remove('hidethis');
+            }
+        });
+    }
+  }
+  customElements.define('astro-greet', AstroGreet);
+</script>

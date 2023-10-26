@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/Container.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Pagination from "../../components/Pagination.astro";
+import { Debug } from 'astro:components';
+
+import { getCollection, getEntry } from 'astro:content';
+export async function getStaticPaths({ paginate }) {
+	const allBlogPosts = (await getCollection('blog'))
+  	.sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()).reverse();
+  	
+	// Return a paginated collection of paths for all posts
+  	return paginate(allBlogPosts, { pageSize: 6 });
+}
+
+// If set up correctly, The page prop now has everything that
+// you need to render a single page (see next section).
+const { page } = Astro.props;
+---
+<!-- <Debug {page}> -->
+<Layout title="Blog | t2del" meta_description="Blog | My Blog" body_class="blog-list">
+	<section>
+		<Container className="container-blog">
+			<h2 class="notshow fromleft"> <span class="text-gradient">Blog</span></h2>
+			<ul role="list" class="link-card-grid grid-3">
+				{
+					page.data.map((post) => ( 					
+						<li class="notshow fromtop">
+							<a href={`/blog/${post.slug}/`}>
+								<img  src={post.data.heroImage} alt={post.data.imgalt} title={post.data.imgalt} />
+								<h4 class="title">{post.data.title}</h4>
+								<p class="date">
+									<FormattedDate date={post.data.pubDate} />
+								</p>
+							</a>							
+						</li>
+					))
+				}
+			</ul>
+			<Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+		</Container>			
+	</section>
+</Layout>

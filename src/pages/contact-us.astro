@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
+
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const name = data.get("name");
+    const email = data.get("email");
+    const password = data.get("password");
+	
+    // Do something with the data
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+---
+
+
+<Layout title="Contact Us | t2del" meta_description="t2del" body_class="contact-us">
+	<section id="contact-us">			
+		<Container className="container-contact-us">			
+			<div class="feedback-form">
+				<h2 class="notshow fromleft"> <span class="text-gradient">Contact Form</span></h2>
+				<iframe style="border:none;width:100%;" height="470px" src="https://opnform.com/forms/contact-us-h9p9jn"></iframe>
+			</div>		
+		</Container>					
+	</section>	
+</Layout>
+
+<style>
+	.feedback-form {
+	margin: 0 auto;
+	width: 100%;
+	min-width: 250px;
+	max-width: 450px;
+  }
+  input,
+  textarea,
+  button {
+	font-size: inherit;
+	margin: 15px 0;
+	padding: 12px 20px;
+	width: 100%;
+  }
+  button {
+	background-color: teal;
+	border: 1px solid black;
+	color: white;
+	width: 50%;
+  }
+  .hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+  }
+  iframe .text-center.w-full.mt-2 {
+	display: none;
+  }
+  </style>

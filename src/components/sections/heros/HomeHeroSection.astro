@@ -1,0 +1,86 @@
+
+	<section class="hero-section__section">
+		<div class="hero-section__image notshow blur">
+			<picture>
+				<img
+					src="/assets/images/home/banner.jpg"
+					alt="T2del"
+					id="home-hero-image"
+				/>
+			</picture>
+		</div>
+		<div class="hero-section__text">
+			<h1 class="notshow blur fromtop">I am <span>Dennis Macapagal</span></h1>
+			<p class="notshow blur fromtop">Full-Stack Developer</p>
+			<p class="notshow blur fromtop">Trying to do better one day at a time.</p>
+			<p class="notshow blur fromtop"><a href="tel: 88140252">88140252</a> </p>
+			<p class="notshow blur fromtop"><a href="mailto: macapagal.dennis@gmail.com">macapagal.dennis@gmail.com</a></p>
+
+			<ul class="social-links">
+				<li class="facebook"><a href="https://www.facebook.com/t2del/"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+				<li class="twitter"><a href="https://twitter.com/t2del"><i class="fa fa-twitter"></i></a></li>
+				<li class="skype hide"><a href="https://join.skype.com/invite/YVtbBwzGoXFE?fbclid=IwAR34rAK1GzC4k-4VccUKOiBuIyjRzjm0HHz2zzlEKrbA6ruG2jkLA6c9g5Y"><i class="fa fa-skype"></i></a></li>
+				<li class="linkedin"><a href="https://www.linkedin.com/in/dennismacapagal/"><i class="fa fa-linkedin"></i></a></li>
+				<li class="whatsapp"><a href="https://wa.me/88140252"><i class="fa fa-whatsapp"></i></a></li>
+				<li class="resume"><a href="https://docs.google.com/document/d/1A8VE6jIIv6r9vaGmvHT9hDhajwXAsImz/edit?usp=share_link&amp;ouid=116872466953417214421&amp;rtpof=true&amp;sd=true" title="Resume"><i class="fa fa-download"></i></a></li>
+			</ul>
+		</div>		
+	</section>
+
+
+<style>
+	.hero-section__section {
+		position: relative;
+    	height: 100vh;
+	}
+	section.hero-section__section:after {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0.55);
+		content: "";
+		z-index: 1;
+	}
+	.hero-section__text {
+		justify-self: center;
+		max-width: 500px;
+		text-align: center;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 2;
+	}
+	.hero-section__text h1, .hero-section__text p {
+		color: #fff;
+	}
+	.hero-btns__container {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+	.hero-btns__container {
+		margin-right: 1rem;
+	}
+	.hero-section__image {
+		width: 100%;
+    	height: 100%;
+	}
+	.hero-section__image picture {
+		width: 100%;
+    	height: 100%;
+	}
+	.hero-section__image img {
+		width: 100%;
+		height: 100%;
+		max-height: 100vh;
+		object-fit: cover;
+	}
+	@media (max-width: 768px) {
+		.hero-section__section {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
